@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ZodError, z } from "zod";
+import OTPModal from "@/components/OTPModal"; // ✅ import OTP popup
 
 // ✅ Zod Schema for validation
 const registrationSchema = z.object({
@@ -22,6 +23,10 @@ export default function Register() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // ✅ OTP state
+  const [otpOpen, setOtpOpen] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
   // ✅ Handle Submit
   async function onSubmit(e: React.FormEvent) {
@@ -51,11 +56,13 @@ export default function Register() {
 
       const data = await res.json();
       sessionStorage.setItem("userId", data.userId);
+      setUserId(data.userId);
 
-      router.push("/otp");
+      // ✅ open OTP popup instead of redirecting
+      setOtpOpen(true);
     } catch (err: unknown) {
       if (err instanceof ZodError) {
-        setError(err.message);
+        setError(err.errors[0].message);
       } else if (err instanceof Error) {
         setError(err.message);
       } else {
@@ -66,39 +73,39 @@ export default function Register() {
     }
   }
 
+  function handleVerified() {
+    setOtpOpen(false);
+    router.push("/details1"); // go to next page after OTP success
+  }
+
   return (
     <section
       className="min-h-screen flex flex-col items-center justify-center text-white p-6 bg-cover bg-center"
       style={{ backgroundImage: "url('/BG.jpg')" }}
     >
-      {/* ✅ Top Bar */}
-      <header className="w-full flex items-center justify-between px-4 py-2">
-        <img src="/Cadbury Logo.png" alt="Cadbury" className="h-8" />
-        <img src="/2d logo.png" alt="#mybirthdaysong" className="h-16" />
-        <button>
-          <img src="/Hamburger.png" alt="Menu" className="h-8" />
-        </button>
-      </header>
-
       {/* ✅ Card */}
-      <div className=" rounded-2xl p-6 space-y-4 mt-6">
-        <div className="flex flex-col items-center space-y-4">
+      <div className="rounded-2xl p-6 space-y-4">
+        <div className="flex items-center justify-center">
           <img
-            src="/registerimage.png"
+            src="/progress bar.png"
             alt="Cadbury Celebrations"
-            className="w-72 drop-shadow-lg"
+            className="w-50 drop-shadow-lg"
           />
+        </div>
+        <div className="flex flex-col items-center space-y-4">
+          <img src="/reg.png" alt="Image" className="w-100 object-contain" />
           <h2 className="text-xl font-bold">Register to create</h2>
         </div>
 
         {/* ✅ Form */}
         <form onSubmit={onSubmit} className="mt-6 w-full max-w-md space-y-4">
           <input
-            type="tel"
+            type="number"
             placeholder="Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className="w-full p-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
+            style={{ paddingLeft: "25px" }}
           />
 
           <input
@@ -107,6 +114,7 @@ export default function Register() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full p-3 mt-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
+            style={{ paddingLeft: "25px" }}
           />
 
           <input
@@ -115,6 +123,7 @@ export default function Register() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full p-3 mt-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
+            style={{ paddingLeft: "25px" }}
           />
 
           {/* ✅ Checkboxes */}
@@ -124,7 +133,7 @@ export default function Register() {
                 type="checkbox"
                 checked={acceptTerms}
                 onChange={(e) => setAcceptTerms(e.target.checked)}
-                className="w-4 h-4 accent-yellow-400"
+                className="w-4 h-4 accent-yellow-400 rounded-full"
               />
               <span>
                 I accept Terms & Conditions and Privacy Policy of Mondelez
@@ -137,7 +146,7 @@ export default function Register() {
                 type="checkbox"
                 checked={promotions}
                 onChange={(e) => setPromotions(e.target.checked)}
-                className="w-4 h-4 accent-yellow-400"
+                className="w-4 h-4 accent-yellow-400 rounded-full"
               />
               <span>
                 I would like to receive promotional communication from Mondelez
@@ -150,15 +159,42 @@ export default function Register() {
           {error && <p className="text-sm text-red-400 font-medium">{error}</p>}
 
           {/* ✅ Submit Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-yellow-400 text-purple-900 font-bold py-3 rounded-full hover:bg-yellow-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? "Submitting..." : "Submit"}
-          </button>
+          <div className="relative flex items-center justify-center mt-6">
+            {/* Left Image */}
+            <img
+              src="/glow.png"
+              alt="Left Decoration"
+              className="absolute left-0 bottom-2 w-8"
+            />
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-yellow-400 text-purple-900 font-bold py-3 px-10 rounded-full hover:bg-yellow-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Submitting..." : "Submit"}
+            </button>
+
+            {/* Right Image */}
+            <img
+              src="/tone.png"
+              alt="Right Decoration"
+              className="absolute right-0 bottom-2 w-8"
+            />
+          </div>
         </form>
       </div>
+
+      {/* ✅ OTP Popup */}
+      {otpOpen && userId && (
+        <OTPModal
+          isOpen={otpOpen}
+          onClose={() => setOtpOpen(false)}
+          userId={userId}
+          onVerified={handleVerified}
+        />
+      )}
     </section>
   );
 }

@@ -64,29 +64,14 @@ export default function LyricsPage() {
       className="min-h-screen flex flex-col items-center justify-center text-white p-6 bg-cover bg-center"
       style={{ backgroundImage: "url('/BG.jpg')" }}
     >
-      {/* Header */}
-      <header className="w-full flex items-center justify-between px-2 sm:px-4 py-2">
-        <img src="/Cadbury Logo.png" alt="Cadbury" className="h-8" />
-        <img
-          src="/2d logo.png"
-          alt="#mybirthdaysong"
-          className="h-14 sm:h-16"
-        />
-        <button aria-label="Menu">
-          <img src="/Hamburger.png" alt="Menu" className="h-8" />
-        </button>
-      </header>
-
-      {/* Progress dots */}
-      <div className="flex justify-center gap-3 mt-4">
-        {[0, 1, 2, 3, 4].map((i) => (
-          <span
-            key={i}
-            className={`w-2.5 h-2.5 rounded-full ${
-              i === 3 ? "bg-yellow-400" : "bg-purple-600"
-            }`}
+      <div className="rounded-2xl p-6 space-y-4">
+        <div className="flex items-center justify-center">
+          <img
+            src="/progress bar4.png"
+            alt="Cadbury Celebrations"
+            className="w-50 drop-shadow-lg"
           />
-        ))}
+        </div>
       </div>
 
       {/* Title */}
@@ -96,7 +81,7 @@ export default function LyricsPage() {
 
       {/* Lyrics Box */}
       <div className="mt-4 flex-1 flex justify-center">
-        <div className="w-full rounded-3xl bg-white/95 shadow-xl p-4">
+        <div className="w-full max-w-md rounded-3xl bg-white/95 shadow-xl p-4">
           <div
             className="h-[58vh] sm:h-[50vh] overflow-y-auto rounded-2xl px-2 scrollbar-thin scrollbar-thumb-yellow-400 scrollbar-track-transparent"
             role="region"
@@ -110,10 +95,10 @@ export default function LyricsPage() {
       </div>
 
       {/* Buttons */}
-      <div className="w-full mx-auto mt-5 mb-6 space-y-3">
+      <div className="w-full mx-auto mt-5 mb-6 space-y-3 flex flex-col items-center">
         <button
           onClick={isPlaying ? stop : play}
-          className="w-full rounded-md bg-yellow-400 text-purple-900 font-extrabold tracking-wide py-3 sm:py-3.5 shadow hover:bg-yellow-300 active:translate-y-[1px] transition"
+          className="mt-8 w-full max-w-md bg-yellow-400 text-purple-900 font-bold py-3 hover:bg-yellow-300 transition"
         >
           {isPlaying ? "STOP" : "PLAY SONG"}
         </button>

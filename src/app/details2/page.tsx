@@ -2,30 +2,32 @@
 import { useState } from "react";
 import { detailsSchema2 } from "@/lib/validators";
 import { useRouter } from "next/navigation";
+import { ZodError } from "zod";
 
 const MOODS = [
-  { key: "happy", label: "Happy", icon: "😊" },
-  { key: "romantic", label: "Romantic", icon: "🥰" },
-  { key: "funny", label: "Funny", icon: "🤠" },
-  { key: "motivational", label: "Motivational", icon: "🌟" },
-  { key: "calm", label: "Calm", icon: "😌" },
+  { key: "happy", label: "Happy", icon: "/Icons/Happy.png" },
+  { key: "romantic", label: "Romantic", icon: "/Icons/Romantic.png" },
+  { key: "funny", label: "Funny", icon: "/Icons/Funny.png" },
+  {
+    key: "motivational",
+    label: "Motivational",
+    icon: "/Icons/Motivational.png",
+  },
+  { key: "calm", label: "Calm", icon: "/Icons/Calm.png" },
 ] as const;
 
 const GENRES = [
-  { key: "rap", label: "Rap", icon: "📻" },
-  { key: "rock", label: "Rock", icon: "🎸" },
-  { key: "pop", label: "Pop", icon: "🎤" },
-  { key: "desi", label: "Desi", icon: "🎶" },
-  { key: "edm", label: "EDM", icon: "🎧" },
+  { key: "rap", label: "Rap", icon: "/Icons/Rap.png" },
+  { key: "rock", label: "Rock", icon: "/Icons/Rock.png" },
+  { key: "pop", label: "Pop", icon: "/Icons/Pop.png" },
+  { key: "desi", label: "Desi", icon: "/Icons/Desi.png" },
+  { key: "edm", label: "EDM", icon: "/Icons/EDM.png" },
 ] as const;
 
-type Mood = (typeof MOODS)[number]["key"];
-type Genre = (typeof GENRES)[number]["key"];
-
 export default function Details2() {
-  const [mood, setMood] = useState<Mood>("happy");
-  const [genre, setGenre] = useState<Genre>("pop");
-  const [gender, setGender] = useState<"male" | "female">("male"); // ✅ renamed
+  const [mood, setMood] = useState("happy");
+  const [genre, setGenre] = useState("pop");
+  const [gender, setGender] = useState<"male" | "female">("male");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -33,7 +35,6 @@ export default function Details2() {
   async function generate() {
     setError("");
     try {
-      // ✅ schema expects gender
       detailsSchema2.parse({ mood, genre, gender });
 
       const userId = sessionStorage.getItem("userId")!;
@@ -42,6 +43,7 @@ export default function Details2() {
       setLoading(true);
       const res = await fetch("/api/generate-lyrics", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, receiverName, mood, genre, gender }),
       });
 
@@ -51,170 +53,154 @@ export default function Details2() {
       sessionStorage.setItem("lyrics", data.lyrics);
       router.push("/lyrics");
     } catch (e: any) {
-      setError(e.message);
-    } finally {
-      setLoading(false);
+      if (e instanceof ZodError) {
+        setError(e.errors[0].message); // show first field error
+      } else {
+        setError(e.message);
+      }
     }
   }
 
   return (
     <section
-      className="min-h-screen flex flex-col items-center justify-center text-white p-6 bg-cover bg-center"
+      className="min-h-screen flex flex-col items-center text-white bg-cover bg-center p-6"
       style={{ backgroundImage: "url('/BG.jpg')" }}
     >
-      {/* Top bar */}
-      <header className="w-full flex items-center justify-between px-4 py-2">
-        <img src="/Cadbury Logo.png" alt="Cadbury" className="h-8" />
-        <img src="/2d logo.png" alt="#mybirthdaysong" className="h-16" />
-        <button>
-          <img src="/Hamburger.png" alt="Menu" className="h-8" />
-        </button>
-      </header>
-
-      {/* Title */}
-      <div className="text-center mt-6">
-        <h2 className="text-xl md:text-2xl font-bold text-white">
-          What would you like their song’s vibe to be?
-        </h2>
+      <div className="rounded-2xl p-6 space-y-4">
+        <div className="flex items-center justify-center">
+          <img
+            src="/progress bar2.png"
+            alt="Cadbury Celebrations"
+            className="w-50 drop-shadow-lg"
+          />
+        </div>
       </div>
+      {/* Title */}
+      <h2 className="text-xl md:text-2xl font-bold text-center mt-6">
+        What would you like their song’s<br></br> vibe to be?
+      </h2>
 
       {/* Illustration */}
-      <div className="mt-6">
+      <div className="flex items-center justify-center space-x-4">
+        {/* 🎉 Left Confetti */}
+        <img
+          src="/PMT.png"
+          alt="Confetti"
+          className="w-12 h-12 object-contain"
+        />
+
+        {/* 🎁 Gift + Hat */}
         <img
           src="/Headphone.png"
-          alt="Headphone"
-          className="w-28 md:w-40 drop-shadow-lg"
+          alt="Gift and Party Hat"
+          className="w-50 md:w-70 object-contain"
+        />
+
+        {/* 🎈 Balloon */}
+        <img
+          src="/Balloon2.png"
+          alt="Balloon"
+          className="w-12 h-20 object-contain"
         />
       </div>
 
       {/* Mood */}
-
-      {/* <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div className="w-full max-w-md bg-purple-900/80 rounded-2xl mt-8">
+        <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2 rounded-t-2xl">
+          Mood
+        </div>
+        <div className="flex justify-around p-4">
           {MOODS.map((m) => (
             <button
               key={m.key}
               onClick={() => setMood(m.key)}
-              className={`flex flex-col items-center justify-center p-4 rounded-xl transition ${
-                mood === m.key
-                  ? "bg-yellow-400 text-purple-900"
-                  : "bg-white text-purple-900 hover:bg-gray-100"
-              }`}
+              className={`flex flex-col items-center w-16`}
             >
-              <span className="text-2xl">{m.icon}</span>
-              <span className="text-sm mt-1">{m.label}</span>
+              <div
+                className={`w-14 h-14 flex items-center justify-center rounded-full border-2 text-2xl ${
+                  mood === m.key
+                    ? "bg-yellow-400 border-yellow-500 text-purple-900"
+                    : "bg-white border-purple-200 text-purple-900"
+                }`}
+              >
+                <img src={m.icon} alt={m.label} className="w-8" />
+              </div>
+              <span
+                className={`mt-2 text-xs ${
+                  mood === m.key
+                    ? "text-yellow-400 font-semibold"
+                    : "text-white"
+                }`}
+              >
+                {m.label}
+              </span>
             </button>
-          ))}
-        </div> */}
-      {/* 
-        <div className="flex justify-between gap-4">
-          {MOODS.map((m) => (
-            <div key={m.key} className="flex flex-col items-center">
-              <button
-                onClick={() => setMood(m.key)}
-                className={`flex items-center justify-center w-16 h-16 rounded-full border-4 text-2xl transition
-          ${
-            mood === m.key
-              ? "bg-yellow-400 border-yellow-500 text-purple-900"
-              : "bg-purple-700 border-purple-600 text-white hover:bg-purple-600"
-          }`}
-              >
-                {m.icon}
-              </button>
-              <span className="text-xs text-white mt-2">{m.label}</span>
-            </div>
-          ))}
-        </div> */}
-
-      <div className="w-full max-w-2xl mx-auto bg-purple-800 rounded-2xl shadow-lg overflow-hidden mt-8">
-        {/* Header */}
-        <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2">
-          Mood
-        </div>
-
-        {/* Mood options */}
-        <div className="flex justify-around flex-wrap gap-4 p-4">
-          {MOODS.map((m) => (
-            <div key={m.key} className="flex flex-col items-center">
-              <button
-                key={m.key}
-                onClick={() => setMood(m.key)}
-                className={`flex flex-col items-center justify-center w-20 h-20 rounded-full border-4 transition
-          ${
-            mood === m.key
-              ? "bg-yellow-400 border-yellow-500 text-purple-900"
-              : "bg-white border-purple-200 text-purple-900 hover:bg-gray-100"
-          }`}
-              >
-                <span className="text-2xl">{m.icon}</span>
-              </button>
-              <span className="text-xs text-white mt-2">{m.label}</span>
-            </div>
           ))}
         </div>
       </div>
 
       {/* Genre */}
-      <div className="w-full max-w-2xl mx-auto bg-purple-800 rounded-2xl shadow-lg overflow-hidden mt-8">
-        {/* Header */}
-        <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2">
+      <div className="w-full max-w-md bg-purple-900/80 rounded-2xl mt-8">
+        <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2 rounded-t-2xl">
           Genre
         </div>
-
-        {/* Genre options */}
-        <div className="flex justify-around flex-wrap gap-4 p-4">
+        <div className="flex justify-around p-4">
           {GENRES.map((g) => (
-            <div key={g.key} className="flex flex-col items-center">
-              <button
-                onClick={() => setGenre(g.key)}
-                className={`flex flex-col items-center justify-center w-20 h-20 rounded-full border-4 transition
-            ${
-              genre === g.key
-                ? "bg-yellow-400 border-yellow-500 text-purple-900"
-                : "bg-white border-purple-300 text-purple-900 hover:bg-gray-100"
-            }`}
+            <button
+              key={g.key}
+              onClick={() => setGenre(g.key)}
+              className="flex flex-col items-center w-16"
+            >
+              <div
+                className={`w-14 h-14 flex items-center justify-center rounded-full border-2 ${
+                  genre === g.key
+                    ? "bg-yellow-400 border-yellow-500"
+                    : "bg-white border-purple-200"
+                }`}
               >
-                {g.icon}
-              </button>
+                <img src={g.icon} alt={g.label} className="h-8" />
+              </div>
               <span
-                className={`text-xs text-white mt-2 ${
-                  genre === g.key ? "text-yellow-400" : "text-white"
+                className={`mt-2 text-xs ${
+                  genre === g.key
+                    ? "text-yellow-400 font-semibold"
+                    : "text-white"
                 }`}
               >
                 {g.label}
               </span>
-            </div>
+            </button>
           ))}
         </div>
       </div>
 
       {/* Singer’s Voice */}
-      <div className="w-full max-w-2xl mx-auto bg-purple-800 rounded-2xl shadow-lg overflow-hidden mt-8">
-        {/* Header */}
-        <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2">
+      <div className="w-full max-w-md bg-purple-900/80 rounded-2xl mt-8">
+        <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2 rounded-t-2xl">
           Singer’s Voice
         </div>
-
-        {/* Voice options */}
-        <div className="flex justify-around flex-wrap gap-4 p-4">
+        <div className="flex justify-around p-4">
           {["male", "female"].map((voice) => (
-            <div key={voice} className="flex flex-col items-center">
-              <button
-                onClick={() => setGender(voice as "male" | "female")}
-                className={`flex flex-col items-center justify-center w-20 h-20 rounded-full border-4 transition
-            ${
-              gender === voice
-                ? "bg-yellow-400 border-yellow-500 text-purple-900"
-                : "bg-white border-purple-300 text-purple-900 hover:bg-gray-100"
-            }`}
+            <button
+              key={voice}
+              onClick={() => setGender(voice as "male" | "female")}
+              className="flex flex-col items-center w-16"
+            >
+              <div
+                className={`w-14 h-14 flex items-center justify-center rounded-full border-2 ${
+                  gender === voice
+                    ? "bg-yellow-400 border-yellow-500"
+                    : "bg-white border-purple-200"
+                }`}
               >
                 <img
                   src={voice === "male" ? "/MAle.png" : "/Female.png"}
                   alt={voice}
-                  className="w-10"
+                  className="w-8"
                 />
-              </button>
+              </div>
               <span
-                className={`text-sm mt-2 capitalize ${
+                className={`mt-2 text-xs capitalize ${
                   gender === voice
                     ? "text-yellow-400 font-semibold"
                     : "text-white"
@@ -222,7 +208,7 @@ export default function Details2() {
               >
                 {voice}
               </span>
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -232,11 +218,11 @@ export default function Details2() {
         <p className="text-sm text-red-400 text-center mt-3">{error}</p>
       )}
 
-      {/* Proceed Button */}
+      {/* Proceed */}
       <button
         disabled={loading}
         onClick={generate}
-        className="mt-8 w-full max-w-lg bg-yellow-400 text-purple-900 font-bold py-3 rounded-full hover:bg-yellow-300 transition"
+        className="mt-8 w-full max-w-md bg-yellow-400 text-purple-900 font-bold py-3 rounded-full hover:bg-yellow-300 transition"
       >
         {loading ? "Generating..." : "Proceed"}
       </button>
