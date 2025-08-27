@@ -16,7 +16,9 @@ export default function Page() {
             className="mx-auto w-80 md:w-100"
           />
           <h1 className="text-4xl font-bold mt-6">#mybirthdaysong</h1>
-          <p className="text-lg mt-3">A unique birthday song for everyone!</p>
+          <p className="font-[var(--font-dairyMilkFont)]">
+            A unique birthday song for everyone!
+          </p>
           <p className="text-sm mt-2 italic opacity-80">
             इस birthday, कुछ अच्छा हो जाए कुछ मीठा हो जाए.
           </p>

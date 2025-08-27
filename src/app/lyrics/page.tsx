@@ -60,49 +60,59 @@ export default function LyricsPage() {
   };
 
   return (
-    <section
-      className="min-h-screen flex flex-col items-center justify-center text-white p-6 bg-cover bg-center"
-      style={{ backgroundImage: "url('/BG.jpg')" }}
-    >
-      <div className="rounded-2xl p-6 space-y-4">
-        <div className="flex items-center justify-center">
-          <img
-            src="/progress bar4.png"
-            alt="Cadbury Celebrations"
-            className="w-50 drop-shadow-lg"
-          />
-        </div>
-      </div>
-
-      {/* Title */}
-      <h2 className="text-center text-white text-lg sm:text-xl font-extrabold mt-4">
-        Your song&apos;s lyrics are ready!
-      </h2>
-
-      {/* Lyrics Box */}
-      <div className="mt-4 flex-1 flex justify-center">
-        <div className="w-full max-w-md rounded-3xl bg-white/95 shadow-xl p-4">
-          <div
-            className="h-[58vh] sm:h-[50vh] overflow-y-auto rounded-2xl px-2 scrollbar-thin scrollbar-thumb-yellow-400 scrollbar-track-transparent"
-            role="region"
-            aria-label="Song lyrics"
-          >
-            <p className="text-purple-900 whitespace-pre-line leading-relaxed text-center">
-              {lyrics || "No lyrics yet."}
-            </p>
+    <>
+      {" "}
+      <header className="w-full flex items-center justify-between px-4 py-1 bg-[#4B0082]">
+        <img src="/Cadbury Logo.png" alt="Cadbury" className="h-8" />
+        <img src="/2d logo.png" alt="#mybirthdaysong" className="w-40" />
+        <button>
+          <img src="/Hamburger.png" alt="Menu" className="h-5 md:h-8" />
+        </button>
+      </header>
+      <section
+        className="min-h-screen flex flex-col items-center justify-center text-white p-6 bg-cover bg-center"
+        style={{ backgroundImage: "url('/BG.jpg')" }}
+      >
+        <div className="rounded-2xl p-6 space-y-4">
+          <div className="flex items-center justify-center">
+            <img
+              src="/progress bar4.png"
+              alt="Cadbury Celebrations"
+              className="w-50 drop-shadow-lg"
+            />
           </div>
         </div>
-      </div>
 
-      {/* Buttons */}
-      <div className="w-full mx-auto mt-5 mb-6 space-y-3 flex flex-col items-center">
-        <button
-          onClick={isPlaying ? stop : play}
-          className="mt-8 w-full max-w-md bg-yellow-400 text-purple-900 font-bold py-3 hover:bg-yellow-300 transition"
-        >
-          {isPlaying ? "STOP" : "PLAY SONG"}
-        </button>
-      </div>
-    </section>
+        {/* Title */}
+        <h2 className="text-center text-white text-lg sm:text-xl font-extrabold mt-4">
+          Your song&apos;s lyrics are ready!
+        </h2>
+
+        {/* Lyrics Box */}
+        <div className="mt-4 flex-1 flex justify-center">
+          <div className="w-full max-w-md rounded-3xl bg-white/95 shadow-xl p-4">
+            <div
+              className="h-[58vh] sm:h-[50vh] overflow-y-auto rounded-2xl px-2 scrollbar-thin scrollbar-thumb-yellow-400 scrollbar-track-transparent"
+              role="region"
+              aria-label="Song lyrics"
+            >
+              <p className="text-purple-900 whitespace-pre-line leading-relaxed text-center">
+                {lyrics || "No lyrics yet."}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="w-full mx-auto mt-5 mb-6 space-y-3 flex flex-col items-center">
+          <button
+            onClick={isPlaying ? stop : play}
+            className="mt-8 w-full max-w-md bg-yellow-400 text-purple-900 font-bold py-3 hover:bg-yellow-300 transition"
+          >
+            {isPlaying ? "STOP" : "PLAY SONG"}
+          </button>
+        </div>
+      </section>
+    </>
   );
 }

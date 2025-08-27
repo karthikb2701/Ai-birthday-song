@@ -25,7 +25,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
 :root {
-  font-family: var(--font-dairyMilk), sans-serif;
+  font-family: var(--font-dairyMilkFont), sans-serif;
 }
 

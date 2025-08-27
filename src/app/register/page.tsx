@@ -79,122 +79,133 @@ export default function Register() {
   }
 
   return (
-    <section
-      className="min-h-screen flex flex-col items-center justify-center text-white p-6 bg-cover bg-center"
-      style={{ backgroundImage: "url('/BG.jpg')" }}
-    >
-      {/* ✅ Card */}
-      <div className="rounded-2xl p-6 space-y-4">
-        <div className="flex items-center justify-center">
-          <img
-            src="/progress bar.png"
-            alt="Cadbury Celebrations"
-            className="w-50 drop-shadow-lg"
-          />
-        </div>
-        <div className="flex flex-col items-center space-y-4">
-          <img src="/reg.png" alt="Image" className="w-100 object-contain" />
-          <h2 className="text-xl font-bold">Register to create</h2>
-        </div>
-
-        {/* ✅ Form */}
-        <form onSubmit={onSubmit} className="mt-6 w-full max-w-md space-y-4">
-          <input
-            type="number"
-            placeholder="Phone Number"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full p-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
-            style={{ paddingLeft: "25px" }}
-          />
-
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full p-3 mt-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
-            style={{ paddingLeft: "25px" }}
-          />
-
-          <input
-            type="email"
-            placeholder="Email ID"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 mt-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
-            style={{ paddingLeft: "25px" }}
-          />
-
-          {/* ✅ Checkboxes */}
-          <div className="space-y-2 text-sm">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={acceptTerms}
-                onChange={(e) => setAcceptTerms(e.target.checked)}
-                className="w-4 h-4 accent-yellow-400 rounded-full"
-              />
-              <span>
-                I accept Terms & Conditions and Privacy Policy of Mondelez
-                (Cadbury)
-              </span>
-            </label>
-
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={promotions}
-                onChange={(e) => setPromotions(e.target.checked)}
-                className="w-4 h-4 accent-yellow-400 rounded-full"
-              />
-              <span>
-                I would like to receive promotional communication from Mondelez
-                (Cadbury) about its products and offers.
-              </span>
-            </label>
-          </div>
-
-          {/* ✅ Error */}
-          {error && <p className="text-sm text-red-400 font-medium">{error}</p>}
-
-          {/* ✅ Submit Button */}
-          <div className="relative flex items-center justify-center mt-6">
-            {/* Left Image */}
+    <>
+      <header className="w-full flex items-center justify-between px-4 py-1 bg-[#4B0082]">
+        <img src="/Cadbury Logo.png" alt="Cadbury" className="h-8" />
+        <img src="/2d logo.png" alt="#mybirthdaysong" className="w-40" />
+        <button>
+          <img src="/Hamburger.png" alt="Menu" className="h-5 md:h-8" />
+        </button>
+      </header>
+      <section
+        className="min-h-screen flex flex-col items-center justify-center text-white p-6 bg-cover bg-center"
+        style={{ backgroundImage: "url('/BG.jpg')" }}
+      >
+        {/* ✅ Card */}
+        <div className="rounded-2xl p-6 space-y-4">
+          <div className="flex items-center justify-center">
             <img
-              src="/glow.png"
-              alt="Left Decoration"
-              className="absolute left-0 bottom-2 w-8"
-            />
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-yellow-400 text-purple-900 font-bold py-3 px-10 rounded-full hover:bg-yellow-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? "Submitting..." : "Submit"}
-            </button>
-
-            {/* Right Image */}
-            <img
-              src="/tone.png"
-              alt="Right Decoration"
-              className="absolute right-0 bottom-2 w-8"
+              src="/progress bar.png"
+              alt="Cadbury Celebrations"
+              className="w-50 drop-shadow-lg"
             />
           </div>
-        </form>
-      </div>
+          <div className="flex flex-col items-center space-y-4">
+            <img src="/reg.png" alt="Image" className="w-100 object-contain" />
+            <h2 className="text-xl font-bold">Register to create</h2>
+          </div>
 
-      {/* ✅ OTP Popup */}
-      {otpOpen && userId && (
-        <OTPModal
-          isOpen={otpOpen}
-          onClose={() => setOtpOpen(false)}
-          userId={userId}
-          onVerified={handleVerified}
-        />
-      )}
-    </section>
+          {/* ✅ Form */}
+          <form onSubmit={onSubmit} className="mt-6 w-full max-w-md space-y-4">
+            <input
+              type="number"
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full p-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
+              style={{ paddingLeft: "25px" }}
+            />
+
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full p-3 mt-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
+              style={{ paddingLeft: "25px" }}
+            />
+
+            <input
+              type="email"
+              placeholder="Email ID"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 mt-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
+              style={{ paddingLeft: "25px" }}
+            />
+
+            {/* ✅ Checkboxes */}
+            <div className="space-y-2 text-sm">
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  checked={acceptTerms}
+                  onChange={(e) => setAcceptTerms(e.target.checked)}
+                  className="w-4 h-4 accent-yellow-400 rounded-full"
+                />
+                <span>
+                  I accept Terms & Conditions and Privacy Policy of Mondelez
+                  (Cadbury)
+                </span>
+              </label>
+
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  checked={promotions}
+                  onChange={(e) => setPromotions(e.target.checked)}
+                  className="w-4 h-4 accent-yellow-400 rounded-full"
+                />
+                <span>
+                  I would like to receive promotional communication from
+                  Mondelez (Cadbury) about its products and offers.
+                </span>
+              </label>
+            </div>
+
+            {/* ✅ Error */}
+            {error && (
+              <p className="text-sm text-red-400 font-medium">{error}</p>
+            )}
+
+            {/* ✅ Submit Button */}
+            <div className="relative flex items-center justify-center mt-6">
+              {/* Left Image */}
+              <img
+                src="/glow.png"
+                alt="Left Decoration"
+                className="absolute left-0 bottom-2 w-8"
+              />
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-yellow-400 text-purple-900 font-bold py-3 px-10 rounded-full hover:bg-yellow-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? "Submitting..." : "Submit"}
+              </button>
+
+              {/* Right Image */}
+              <img
+                src="/tone.png"
+                alt="Right Decoration"
+                className="absolute right-0 bottom-2 w-8"
+              />
+            </div>
+          </form>
+        </div>
+
+        {/* ✅ OTP Popup */}
+        {otpOpen && userId && (
+          <OTPModal
+            isOpen={otpOpen}
+            onClose={() => setOtpOpen(false)}
+            userId={userId}
+            onVerified={handleVerified}
+          />
+        )}
+      </section>
+    </>
   );
 }
