@@ -2,14 +2,25 @@
 import * as z from "zod";
 
 export const registrationSchema = z.object({
-  name: z.string().trim().min(2, { message: "Name is required (min 2 characters)" }).max(50, { message: "Name must be under 50 characters" }),
-  email: z.string().trim().email({ message: "Enter a valid email address" }).max(100, { message: "Email too long" }),
-  phone: z.string().trim().regex(/^[0-9]{10,15}$/, { message: "Enter 10-15 digit phone number" }),
-});
+    name: z
+      .string()
+      .trim()
+      .min(2, "Name is required (min 2 characters)")
+      .max(20, "Name must be under 20 characters"),
+    email: z
+      .string()
+      .trim()
+      .email("Invalid email address")
+      .max(30, "Email must be under 30 characters"),
+    phone: z
+      .string()
+      .regex(/^[0-9]{10,15}$/, "Phone must be 10-15 digits"),
+  });
+  
 
 // ✅ Details1 — Loved one info
 export const detailsSchema1 = z.object({
-  name: z.string().trim().min(2, { message: "Their name is required" }).max(50, { message: "Name must be under 50 characters" }),
+  name: z.string().trim().min(2, { message: "Their name is required" }).max(20, { message: "Name must be under 20 characters" }),
   age: z.string().min(1, { message: "Please select an age" }),
   gender: z.enum(["male", "female", "other"], { message: "Please select a gender" }),
 });

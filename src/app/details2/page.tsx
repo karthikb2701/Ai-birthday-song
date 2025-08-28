@@ -114,8 +114,14 @@ export default function Details2() {
         </div>
 
         {/* Mood */}
-        <div className="w-full max-w-md bg-purple-900/80 rounded-2xl mt-8">
-          <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2 rounded-t-2xl">
+        <div
+          className="w-full max-w-md bg-purple-900/80 rounded-2xl mt-8 border-yellow-500"
+          style={{ border: "2px solid #FFD700" }}
+        >
+          <div
+            className="bg-yellow-400 text-purple-900 font-bold text-center py-2 rounded-t-xl"
+            style={{ border: "2px solid #FFD700" }}
+          >
             Mood
           </div>
           <div className="flex justify-around p-4">
@@ -149,8 +155,11 @@ export default function Details2() {
         </div>
 
         {/* Genre */}
-        <div className="w-full max-w-md bg-purple-900/80 rounded-2xl mt-8">
-          <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2 rounded-t-2xl">
+        <div
+          className="w-full max-w-md bg-purple-900/80 rounded-2xl mt-8"
+          style={{ border: "2px solid #FFD700" }}
+        >
+          <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2 rounded-t-xl">
             Genre
           </div>
           <div className="flex justify-around p-4">
@@ -184,8 +193,11 @@ export default function Details2() {
         </div>
 
         {/* Singer’s Voice */}
-        <div className="w-full max-w-md bg-purple-900/80 rounded-2xl mt-8">
-          <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2 rounded-t-2xl">
+        <div
+          className="w-full max-w-md bg-purple-900/80 rounded-2xl mt-8"
+          style={{ border: "2px solid #FFD700" }}
+        >
+          <div className="bg-yellow-400 text-purple-900 font-bold text-center py-2 rounded-t-xl">
             Singer’s Voice
           </div>
           <div className="flex justify-around p-4">
@@ -196,7 +208,7 @@ export default function Details2() {
                 className="flex flex-col items-center w-16"
               >
                 <div
-                  className={`w-14 h-14 flex items-center justify-center rounded-full border-2 ${
+                  className={`w-14 h-14 flex items-center justify-center rounded-xl border-2 ${
                     gender === voice
                       ? "bg-yellow-400 border-yellow-500"
                       : "bg-white border-purple-200"
@@ -205,7 +217,7 @@ export default function Details2() {
                   <img
                     src={voice === "male" ? "/MAle.png" : "/Female.png"}
                     alt={voice}
-                    className="w-8"
+                    className=""
                   />
                 </div>
                 <span
@@ -231,7 +243,7 @@ export default function Details2() {
         <button
           disabled={loading}
           onClick={generate}
-          className="mt-8 w-full max-w-md bg-yellow-400 text-purple-900 font-bold py-3 rounded-full hover:bg-yellow-300 transition"
+          className="mt-8 w-1/2 md:w-1/2 bg-yellow-400 text-purple-900 font-bold py-3 rounded-xl hover:bg-yellow-300 transition"
         >
           {loading ? "Generating..." : "Proceed"}
         </button>

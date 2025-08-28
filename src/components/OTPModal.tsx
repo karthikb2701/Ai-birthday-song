@@ -44,7 +44,7 @@ export default function OTPModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-lg text-right">
+      <div className="bg-white rounded-2xl p-6 w-80 max-w-sm shadow-lg text-right">
         {/* Title */}
         <h2 className="text-xl font-bold text-purple-900 mb-4 text-center">
           Enter OTP
@@ -57,10 +57,12 @@ export default function OTPModal({
         {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
 
         {/* Resend */}
+
         <button
           type="button"
           onClick={onResend}
-          className="text-sm text-purple-800 underline mt-3"
+          className="text-sm text-purple-800 underline mt-3 font-bold"
+          style={{ paddingBottom: "10px" }}
         >
           Resend OTP
         </button>
@@ -69,7 +71,8 @@ export default function OTPModal({
         <button
           disabled={loading}
           onClick={verify}
-          className="mt-4 w-full bg-yellow-400 text-purple-900 font-bold py-2 rounded-lg hover:bg-yellow-300 transition disabled:opacity-50"
+          className="mt-4 w-30 bg-yellow-400 text-purple-900 font-bold py-2 rounded-lg hover:bg-yellow-300 transition disabled:opacity-50"
+          style={{ display: "block", margin: "auto" }}
         >
           {loading ? "Verifying..." : "Submit"}
         </button>

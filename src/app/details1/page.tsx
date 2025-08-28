@@ -52,7 +52,7 @@ export default function Details1() {
       </header>
 
       <section
-        className="min-h-screen flex flex-col items-center justify-center text-white p-6 bg-cover bg-center"
+        className="min-h-screen flex flex-col items-center text-white p-6 bg-cover bg-center"
         style={{ backgroundImage: "url('/BG.jpg')" }}
       >
         {/* Top bar 
@@ -101,13 +101,14 @@ export default function Details1() {
         {/* Form */}
         <div className="mt-8 w-full max-w-md space-y-6">
           {/* Name */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Their name</label>
+          <div className="space-y-2 text-center">
+            <label className="text-sm font-bold text-white">Their name</label>
             <input
               className="w-full p-3 rounded-full bg-white text-black outline-none"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter their name"
+              maxLength={20}
               style={{ paddingLeft: "25px" }}
             />
             {errors.name && (
@@ -116,8 +117,8 @@ export default function Details1() {
           </div>
 
           {/* Age */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-white">
+          <div className="space-y-2 text-center">
+            <label className="text-sm font-bold text-white">
               How old they'll be this birthday
             </label>
             <select
@@ -135,8 +136,8 @@ export default function Details1() {
           </div>
 
           {/* Gender */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Gender</label>
+          <div className="space-y-2 text-center">
+            <label className="text-sm font-bold text-white">Gender</label>
             <select
               value={gender}
               onChange={(e) => setGender(e.target.value)}
@@ -155,7 +156,7 @@ export default function Details1() {
         {/* Proceed Button */}
         <button
           onClick={next}
-          className="mt-8 w-full max-w-md bg-yellow-400 text-purple-900 font-bold py-3 rounded-full hover:bg-yellow-300 transition"
+          className="mt-8 w-1/2 md:w-1/2 bg-yellow-400 text-purple-900 font-bold py-3 rounded-xl hover:bg-yellow-300 transition"
         >
           Proceed
         </button>

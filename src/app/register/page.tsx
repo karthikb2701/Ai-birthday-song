@@ -88,7 +88,7 @@ export default function Register() {
         </button>
       </header>
       <section
-        className="min-h-screen flex flex-col items-center justify-center text-white p-6 bg-cover bg-center"
+        className="min-h-screen flex flex-col items-center text-white p-6 bg-cover bg-center"
         style={{ backgroundImage: "url('/BG.jpg')" }}
       >
         {/* ✅ Card */}
@@ -108,10 +108,12 @@ export default function Register() {
           {/* ✅ Form */}
           <form onSubmit={onSubmit} className="mt-6 w-full max-w-md space-y-4">
             <input
-              type="number"
+              type="tel"
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              maxLength={15} // 🚀 matches schema
+              pattern="[0-9]{10,15}" // 🚀 browser validation
               className="w-full p-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
               style={{ paddingLeft: "25px" }}
             />
@@ -121,6 +123,7 @@ export default function Register() {
               placeholder="Full Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              maxLength={20} // 🚀 matches schema
               className="w-full p-3 mt-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
               style={{ paddingLeft: "25px" }}
             />
@@ -130,6 +133,7 @@ export default function Register() {
               placeholder="Email ID"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              maxLength={30} // 🚀 matches schema
               className="w-full p-3 mt-3 rounded-full bg-white text-black placeholder-gray-500 outline-none"
               style={{ paddingLeft: "25px" }}
             />
