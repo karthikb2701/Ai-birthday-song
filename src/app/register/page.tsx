@@ -108,7 +108,7 @@ export default function Register() {
           {/* ✅ Form */}
           <form onSubmit={onSubmit} className="mt-6 w-full max-w-md space-y-4">
             <input
-              type="tel"
+              type="number"
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
